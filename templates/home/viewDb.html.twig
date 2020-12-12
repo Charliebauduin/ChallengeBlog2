@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h1>La Super Database</h1>
+
+
+<table>
+
+    <tr class="mainTr">
+      <td>id</td>
+      <td>title</td>
+      <td>body</td>
+      <td>nblikes</td>
+      <td>creer le</td>
+      <td>mis à jour le</td>
+      <td>publié le</td>
+      <td>modifier</td>
+      <td>supprimer</td>
+      
+    </tr>
+
+    {% for item in allPost %}
+
+        <tr>
+            <td>{{item.id}}</td>
+            <td>{{item.title}}</td>
+            <td>{{item.body}}</td>
+            <td>{{item.nbLikes}}</td>
+            <td>{{item.createdAt|date("m/d/Y")}} à {{item.createdAt|date("H:i")}}</td>
+            <td>{{item.updatedAt|date("m/d/Y")}} à {{item.createdAt|date("H:i")}}</td>
+            <td>{{item.publishedAt|date("m/d/Y")}} à {{item.createdAt|date("H:i")}}</td>
+            <td><a href="{{ path('update', {id: item.id} ) }}">Modifier</a></td>
+            <td><a href="{{ path('delete', {id: item.id} ) }}">Supprimer</a></td>
+
+        </tr>
+
+    {% endfor %}
+
+</table>
+
+<a href="{{path('home')}}">Home</a>
+
+{% endblock %}

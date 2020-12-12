@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h1>La Super Database</h1>
+
+
+<table>
+
+    <tr class="mainTr">
+      <td>id</td>
+      <td>title</td>
+      <td>body</td>
+      <td>nblikes</td>
+      <td>creer le</td>
+      <td>mis à jour le</td>
+      <td>publié le</td>
+    </tr>
+
+        <tr>
+            <td>{{post.id}}</td>
+            <td>{{post.title}}</td>
+            <td>{{post.body}}</td>
+            <td>{{post.nbLikes}}</td>
+            <td>{{post.createdAt|date("m/d/Y")}}</td>
+            <td>{{post.updatedAt|date("m/d/Y")}}</td>
+            <td>{{post.publishedAt|date("m/d/Y")}}</td>
+        </tr>
+
+
+</table>
+
+
+{% endblock %}

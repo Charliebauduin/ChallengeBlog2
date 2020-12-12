@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+<h1>Coucou</h1>
+
+
+
+<form action="{{ path('create') }}" method="POST">
+
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input  class="form-control" id="title" name="title" placeholder="Enter title">
+    </div>
+
+    <div class="form-group">
+        <label for="body">body</label>
+        <input  class="form-control" id="body" name="body" placeholder="Enter body">
+    </div>
+
+    <div class="form-group">
+        <label for="nbLikes">nbLikes</label>
+        <input  class="form-control" id="nbLikes" name="nbLikes" placeholder="Enter nbLikes">
+    </div>
+
+    <div class="form-group">
+        <label for="createdAt">createdAt</label>
+        <input  class="form-control" id="createdAt" name="createdAt" placeholder="facultatif">
+    </div>
+
+    <div class="form-group">
+        <label for="updatedAt">updatedAt</label>
+        <input  class="form-control" id="updatedAt" name="updatedAt" placeholder="facultatif">
+    </div>
+    
+    <div class="form-group">
+        <label for="publishedAt">publishedAt</label>
+        <input  class="form-control" id="publishedAt" name="publishedAt" placeholder="facultatif">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>
+
+<a href="{{ path('showAll')}}">view DB</a>
+
+
+{% endblock %}
