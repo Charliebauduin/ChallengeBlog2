@@ -120,26 +120,6 @@ class SuperController extends AbstractController
     }
     //==========================================================================================================
 
-    /**
-     * @Route("/author/create/{id}", name="authorCreate")
-     *
-     */
-    public function createAuthor(Post $post, EntityManagerInterface $manager)
-    {
-
-        $author = new Author;
-
-        $author->setFirstname('Lea');
-        $author->setLastname('Petite Patate');
-        $author->setPost($post);
-        $author->setCreatedAt(new DateTime('now'));
-
-        $manager->persist($author);
-        $manager->flush();
-
-        dd($author);
-    }
-
 
     /**
      * @Route("/update/{id}", name="update")
