@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Author;
+use DateTime;
 use App\Entity\Post;
+use App\Entity\Comment;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -52,18 +56,91 @@ class SuperController extends AbstractController
         return $this->render('home/viewDb.html.twig', ['allPost' => $post]);
 
     }
+    // /**
+    //  * @Route("/showone/{id}", name="showone")
+    //  */
+    // public function showOne($id): Response
+    // {
+        
+
+    //     $repository = $this->getDoctrine()->getRepository(Post::class);
+
+    //     $post = $repository->find($id);
+
+        
+
+    // }
+
+
+    //===========================ALTERNATIVE RACCOURCIE A SHOWONE==========================================
     /**
-     * @Route("/showone/{id}", name="showone")
+     * Affiche un article
+     * Avec le ParamConverter ! {id} => Post $post
+     * @link https://symfony.com/doc/current/doctrine.html#automatically-fetching-objects-paramconverter
+     * 
+     * @Route("/showone/{id}", name="showone", methods={"GET","POST"})
      */
-    public function showOne($id): Response
+    public function showOne(Post $post = null , Request $request)
     {
-        $repository = $this->getDoctrine()->getRepository(Post::class);
+        if ($request->isMethod('POST')){
 
-        $post = $repository->find($id);
+            $comment = new Comment;
+        
+            $userName = $request->request->get('Username');
+            $body = $request->request->get('body');
+            
+            $comment->setPost($post);
+            $comment->setUsername($userName);
+            $comment->setBody($body);
+            $comment->setPublishedAt(new DateTime('now'));
+    
+            $manager =  $this->getDoctrine()->getManager();
+            
+            $manager->persist($comment);
+    
+            $manager->flush();
 
-        return $this->render('home/viewOne.html.twig', ['post' => $post]);
+            $this->addFlash('success', 'YOUHOUUU COMMENTAIRE AJOUTE');
+    
+            return $this->render('home/viewOne.html.twig', ['post' => $post]);
 
+        }
+        else {
+
+            if(!$post){
+
+                throw $this->createNotFoundException('ERRRREEEUUURRRR');
+            }
+
+            return $this->render('home/viewOne.html.twig', ['post' => $post]);
+
+        }
+
+        
     }
+    //==========================================================================================================
+
+    /**
+     * @Route("/author/create/{id}", name="authorCreate")
+     *
+     */
+    public function createAuthor(Post $post, EntityManagerInterface $manager)
+    {
+
+        $author = new Author;
+
+        $author->setFirstname('Lea');
+        $author->setLastname('Petite Patate');
+        $author->setPost($post);
+        $author->setCreatedAt(new DateTime('now'));
+
+        $manager->persist($author);
+        $manager->flush();
+
+        dd($author);
+    }
+
+
     /**
      * @Route("/update/{id}", name="update")
      */
